@@ -7,7 +7,7 @@ import { basic } from "../lib/spotify";
 import RefreshToken from "../components/RefreshToken";
 
 export default async function spotifyAuth(req: NowRequest, res: NowResponse) {
-	const redirect_uri = `${req.headers.origin}/api/auth`;
+	const redirect_uri = `${req.headers["x-forwarded-proto"]}://${req.headers["x-forwarded-host"]}/api/auth`;
 
 	console.log(req.headers);
 
