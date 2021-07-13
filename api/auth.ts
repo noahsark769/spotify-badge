@@ -6,15 +6,16 @@ import { CLIENT_ID, TOKEN_ENDPOINT } from "../consts/spotify";
 import { basic } from "../lib/spotify";
 import RefreshToken from "../components/RefreshToken";
 
-const { VERCEL_URL } = process.env;
-const REDIRECT_URI = `https://${VERCEL_URL}/api/auth`;
-
 export default async function spotifyAuth(req: NowRequest, res: NowResponse) {
+	const redirect_uri = `${req.headers.origin}/api/auth`;
+
+	console.log(redirect_uri);
+
 	if (!req.query.code) {
 		const query = new URLSearchParams({
 			client_id: CLIENT_ID,
 			response_type: "code",
-			redirect_uri: REDIRECT_URI,
+			redirect_uri,
 			scope: "user-read-currently-playing user-top-read",
 		});
 
@@ -32,7 +33,7 @@ export default async function spotifyAuth(req: NowRequest, res: NowResponse) {
 		body: new URLSearchParams({
 			grant_type: "authorization_code",
 			code: `${req.query.code}`,
-			redirect_uri: REDIRECT_URI,
+			redirect_uri,
 		}).toString(),
 	});
 
