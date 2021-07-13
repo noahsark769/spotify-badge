@@ -9,7 +9,7 @@ import RefreshToken from "../components/RefreshToken";
 export default async function spotifyAuth(req: NowRequest, res: NowResponse) {
 	const redirect_uri = `${req.headers.origin}/api/auth`;
 
-	console.log(redirect_uri);
+	console.log(req.headers);
 
 	if (!req.query.code) {
 		const query = new URLSearchParams({
